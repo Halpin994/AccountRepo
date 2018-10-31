@@ -31,6 +31,10 @@ public class Service {
     public Account retrieveAccount(String accountNumber) {
         return accounts.get(accountNumber);
     }
+    
+    public int countAccounts(final String firstName) {
+        return (int) accounts.values().stream().filter(s -> s.getFirstName().equals(firstName)).count();
+    }
 
     @Override
     public boolean equals(Object o) {
