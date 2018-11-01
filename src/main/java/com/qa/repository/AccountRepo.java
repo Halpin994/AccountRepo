@@ -5,6 +5,7 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 import java.util.Collection;
 
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +16,8 @@ import com.qa.domain.Account;
 import com.qa.util.JSONUtil;
 
 @Transactional(SUPPORTS)
-public class AccountRepo {
+@Default
+public class AccountRepo implements IAccountRepository{
 	
 	@PersistenceContext(unitName = "primary")
 	private EntityManager manager;
@@ -29,6 +31,7 @@ public class AccountRepo {
 		return util.getJSONForObject(accounts);
 	}
 	
+	@Override
 	@Transactional(REQUIRED)
 	public String addAccount(String jsonAccount) {
 		Account anAccount = util.getObjectForJSON(jsonAccount, Account.class);
@@ -54,7 +57,8 @@ public class AccountRepo {
 		return "{\"message\": \"account has been sucessfully updated\"}";
 	}
 	
-	public String getAccount(Account accountNumber) {
+	@Transactional(SUPPORTS)
+	public String getAccount(String accountNumber) {
 		Account anAccount =  manager.find(Account.class, accountNumber);
 		return util.getJSONForObject(anAccount);
 	}
