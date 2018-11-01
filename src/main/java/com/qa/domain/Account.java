@@ -1,10 +1,17 @@
 package com.qa.domain;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Account {
 
-	String firstName;
-	String lastName;
-	String accountNumber;
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int Id;
+	private String firstName;
+	private String lastName;
+	private String accountNumber;
 	
 	public Account(String a, String b, String c)
 	{
